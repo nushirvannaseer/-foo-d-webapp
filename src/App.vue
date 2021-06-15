@@ -6,9 +6,29 @@
 
 <script>
 
+import {onBeforeMount} from 'vue';
+import {useRoute, useRouter} from 'vue-router'
+import firebase from "firebase"
+
+
 
 
 export default{
+    setup(){
+        const router=useRouter();
+        const route=useRoute();
+
+        onBeforeMount(()=>{
+            firebase.auth().onAuthStateChanged((user)=>{
+                if(!user){
+                    router.replace('/loginSignUp');
+                }
+                else if(route.path==='/loginSignUp')
+                router.replace('/posts');
+            })
+        })
+    }
+
 
 }
 </script>

@@ -17,11 +17,49 @@
   <p>or</p>
 
   <a href="#" @click="isLogin===false?loadLogin(): loadSignUp()">{{isLogin===false?"Login": "Sign Up"}}</a>
+
+  <button @click="signInWithGoogle()">Continue with Google</button>
 </template>
 
 <script>
 
+// import {ref} from 'vue';
+import firebase from 'firebase';
+import { useRouter} from 'vue-router'
+
 export default{
+  setup(){
+    const signInWithGoogle=()=>{
+       
+    var provider = new firebase.auth.GoogleAuthProvider();
+    provider.addScope('https://www.googleapis.com/auth/contacts.readonly');
+    firebase.auth()
+  .signInWithPopup(provider)
+  .then((result) => {
+    /** @type {firebase.auth.OAuthCredential} */
+    var credential = result.credential;
+
+    // This gives you a Google Access Token. You can use it to access the Google API.
+    var token = credential.accessToken;
+    // The signed-in user info.
+    var user = result.user;
+    console.log("TOKEN", token, "\nUSER", user);
+    const router=useRouter();
+    router.replace('/posts');
+    // ...
+  }).catch((error) => {
+    console.log("ERROR", error)
+   
+  },
+  );
+    }
+
+    return {
+      signInWithGoogle,
+    }
+  },
+
+
   methods:{
     onSubmit(){
       
@@ -48,7 +86,9 @@ export default{
 ,
     loadSignUp(){
       this.isLogin=false;
-    }
+    },
+
+    
   },
 
   data(){
@@ -62,5 +102,10 @@ export default{
     }
   }
 };
+
+
+
+
+
 </script>
 
