@@ -1,22 +1,67 @@
 <template>
-    <ul>
-        <li v-for="(post, index) in posts" :key="index"><span>{{post.fullname}}<br>{{post.date}}<br>{{post.postContent}}<br>{{`Likes ${post.likes}  Comments ${post.comments}`}}</span>
-        </li>
-    </ul>
+  <button @click="Logout">Log Out</button>
+  <div id="app"></div>
+  <ul>
+    <li v-for="(post, index) in posts" :key="index">
+      <span
+        >{{ post.fullname }}
+        <br />
+        {{ post.date }}
+        <br />
+        {{ post.postContent }}
+        <br />{{ `Likes ${post.likes}  Comments ${post.comments}` }}
+      </span>
+      <facebook-button
+        url="https://www.google.com.pk"
+        description="Hey Check out this post on Foo-D!"
+      />
+      <twitter-button
+        url="http://localhost:8080/posts"
+        description="Hey Check out this post on Foo-D!"
+      />
+      <linked-in-button
+        url="https://www.google.com.pk"
+        description="Hey Check out this post on Foo-D!"
+      />
+    </li>
+  </ul>
 </template>
 
 <script>
-
-// import POSTS from '../data/posts.js';
+import firebase from "firebase";
+import { useRouter } from "vue-router";
+import TwitterButton from "vue-share-buttons/src/components/TwitterButton";
+import LinkedInButton from "vue-share-buttons/src/components/LinkedInButton";
+import FacebookButton from "vue-share-buttons/src/components/FacebookButton";
 
 export default {
-   data(){
-       console.log(POSTS);
-      return{
-    posts:POSTS,
-      } 
-   }
-}
+  data() {
+    console.log(POSTS);
+    return {
+      posts: POSTS,
+    };
+  },
+
+  components: {
+    TwitterButton,
+    LinkedInButton,
+    FacebookButton,
+  },
+
+  methods: {
+    Logout() {
+      firebase
+        .auth()
+        .signOut()
+        .then(() => {
+          useRouter().replace("/loginSignUp");
+        })
+        .catch((error) => {
+          console.log("Error: ", error);
+        });
+    },
+  },
+};
 
 const POSTS = [
   {
@@ -89,7 +134,4 @@ const POSTS = [
     comments: 20,
   },
 ];
-
-
 </script>
-
