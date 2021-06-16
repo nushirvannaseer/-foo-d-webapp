@@ -1,5 +1,10 @@
 <template>
-  <button @click="Logout">Log Out</button>
+  <button @click="Logout">
+    Log Out
+  </button>
+  <button>
+    <router-link to="/geoLocation"> Get Location</router-link>
+  </button>
   <div id="app"></div>
   <ul>
     <li v-for="(post, index) in posts" :key="index">
@@ -16,6 +21,7 @@
         description="Hey Check out this post on Foo-D!"
       />
       <twitter-button
+        @click="LogAnalyticalData('twitter')"
         url="http://localhost:8080/posts"
         description="Hey Check out this post on Foo-D!"
       />
@@ -49,6 +55,11 @@ export default {
   },
 
   methods: {
+    LogAnalyticalData(type) {
+      console.log(type);
+      firebase.analytics().logEvent("notification_received");
+    },
+
     Logout() {
       firebase
         .auth()
@@ -59,6 +70,10 @@ export default {
         .catch((error) => {
           console.log("Error: ", error);
         });
+    },
+
+    Geolocation() {
+      useRouter().replace("/geoLocation");
     },
   },
 };

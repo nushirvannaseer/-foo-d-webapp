@@ -3,6 +3,7 @@ import App from "./App.vue";
 import router from "./router";
 
 import firebase from "firebase";
+import Ads from "vue-google-adsense";
 
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
 const firebaseConfig = {
@@ -15,33 +16,14 @@ const firebaseConfig = {
   measurementId: "G-NPW8FHMCFW",
 };
 
+// const frame = document.getElementById("adsense");
+// frame.contentWindow.postMessage("MMMMMMMMM", "*");
+
 firebase.initializeApp(firebaseConfig);
-firebase.analytics();
+export const analytics = firebase.analytics();
 
 createApp(App)
   .use(router)
+  .use(require("vue-script2"))
+  .use(Ads.Adsense)
   .mount("#app");
-
-//   <!-- The core Firebase JS SDK is always required and must be listed first -->
-// <script src="https://www.gstatic.com/firebasejs/8.6.7/firebase-app.js"></script>
-
-// <!-- TODO: Add SDKs for Firebase products that you want to use
-//      https://firebase.google.com/docs/web/setup#available-libraries -->
-// <script src="https://www.gstatic.com/firebasejs/8.6.7/firebase-analytics.js"></script>
-
-// <script>
-//   // Your web app's Firebase configuration
-//   // For Firebase JS SDK v7.20.0 and later, measurementId is optional
-//   var firebaseConfig = {
-//     apiKey: "AIzaSyBLWiq2enLwOii4yEnBAnDcnIMJEXNuNyo",
-//     authDomain: "web-project-b9ab7.firebaseapp.com",
-//     projectId: "web-project-b9ab7",
-//     storageBucket: "web-project-b9ab7.appspot.com",
-//     messagingSenderId: "196212344864",
-//     appId: "1:196212344864:web:43aeadd1a00b537a335445",
-//     measurementId: "G-NPW8FHMCFW"
-//   };
-//   // Initialize Firebase
-//   firebase.initializeApp(firebaseConfig);
-//   firebase.analytics();
-// </script>
