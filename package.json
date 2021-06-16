@@ -9,6 +9,7 @@
   },
   "dependencies": {
     "@googlemaps/js-api-loader": "^1.12.1",
+    "bootstrap": "^5.0.0-beta3",
     "core-js": "^3.6.5",
     "firebase": "^8.6.7",
     "vue": "^3.0.0",

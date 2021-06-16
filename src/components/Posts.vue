@@ -1,37 +1,60 @@
 <template>
-  <button @click="Logout">
-    Log Out
-  </button>
-  <button>
-    <router-link to="/geoLocation"> Get Location</router-link>
-  </button>
-  <div id="app"></div>
-  <ul>
-    <li v-for="(post, index) in posts" :key="index">
-      <span
-        >{{ post.fullname }}
+  <div id="app">
+    <button @click="Logout">
+      Log Out
+    </button>
+    &nbsp;
+    <button>
+      <router-link to="/geoLocation"> Get Location</router-link>
+    </button>
+
+    <ul>
+      <li class="post-item" v-for="(post, index) in posts" :key="index">
+        <span style="font-weight: bold">{{ post.fullname }}</span>
         <br />
-        {{ post.date }}
-        <br />
+        <span style="font-size: smaller"> {{ post.date }} </span><br />
         {{ post.postContent }}
-        <br />{{ `Likes ${post.likes}  Comments ${post.comments}` }}
-      </span>
-      <facebook-button
-        url="https://www.google.com.pk"
-        description="Hey Check out this post on Foo-D!"
-      />
-      <twitter-button
-        @click="LogAnalyticalData('twitter')"
-        url="http://localhost:8080/posts"
-        description="Hey Check out this post on Foo-D!"
-      />
-      <linked-in-button
-        url="https://www.google.com.pk"
-        description="Hey Check out this post on Foo-D!"
-      />
-    </li>
-  </ul>
+        <br /><span style="font-weight: bold"
+          >{{ `Likes ${post.likes}  Comments ${post.comments}` }} </span
+        ><br />
+        <facebook-button
+          url="https://www.google.com.pk"
+          description="Hey! Check out this post on Foo-D!"
+        />
+        <twitter-button
+          @click="LogAnalyticalData('twitter')"
+          url="http://localhost:8080/posts"
+          description="Hey! Check out this post on Foo-D!"
+        />
+        <linked-in-button
+          url="https://www.google.com.pk"
+          description="Hey! Check out this post on Foo-D!"
+        />
+      </li>
+    </ul>
+  </div>
 </template>
+
+<style scoped>
+.post-item {
+  box-shadow: 1px 1px 1px 1px black;
+  width: 80vw;
+  /* ;
+   */
+  border-radius: 10px;
+  padding: 3%;
+  background-color: silver;
+  margin: 4%;
+  list-style: none;
+  margin-bottom: 1.5%;
+  margin-top: 1.5%;
+}
+
+#app {
+  background-color: gray;
+  min-height: 150vh;
+}
+</style>
 
 <script>
 import firebase from "firebase";
