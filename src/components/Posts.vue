@@ -7,6 +7,11 @@
     <button>
       <router-link to="/geoLocation"> Get Location</router-link>
     </button>
+    <div
+      style="display: flex; flex-direction: row; justify-content: center; color: white"
+    >
+      <h2>Posts</h2>
+    </div>
 
     <ul>
       <li class="post-item" v-for="(post, index) in posts" :key="index">
@@ -18,6 +23,7 @@
           >{{ `Likes ${post.likes}  Comments ${post.comments}` }} </span
         ><br />
         <facebook-button
+          @click="LogAnalyticalData('facebook')"
           url="https://www.google.com.pk"
           description="Hey! Check out this post on Foo-D!"
         />
@@ -27,6 +33,7 @@
           description="Hey! Check out this post on Foo-D!"
         />
         <linked-in-button
+          @click="LogAnalyticalData('linkedin')"
           url="https://www.google.com.pk"
           description="Hey! Check out this post on Foo-D!"
         />
@@ -37,22 +44,22 @@
 
 <style scoped>
 .post-item {
-  box-shadow: 1px 1px 1px 1px black;
+  box-shadow: 3px 2px 10px -1px black;
   width: 80vw;
   /* ;
    */
   border-radius: 10px;
   padding: 3%;
-  background-color: silver;
-  margin: 4%;
+  background-color: khaki;
+  margin: 7.5%;
   list-style: none;
   margin-bottom: 1.5%;
   margin-top: 1.5%;
 }
 
 #app {
-  background-color: gray;
-  min-height: 150vh;
+  background-color: mediumorchid;
+  min-height: 200vh;
 }
 </style>
 
@@ -80,7 +87,9 @@ export default {
   methods: {
     LogAnalyticalData(type) {
       console.log(type);
-      firebase.analytics().logEvent("notification_received");
+      firebase.analytics().logEvent("share", {
+        label: type + " share button clicked",
+      });
     },
 
     Logout() {

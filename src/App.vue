@@ -16,8 +16,9 @@ export default {
     onBeforeMount(() => {
       firebase.auth().onAuthStateChanged((user) => {
         if (!user) {
-          router.replace("/loginSignUp");
-        } else if (route.path === "/loginSignUp") router.replace("/posts");
+          console.log(user);
+          router.replace("/");
+        } else if (route.path === "/") router.replace("/posts");
       });
     });
   },

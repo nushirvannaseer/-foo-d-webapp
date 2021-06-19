@@ -1,5 +1,7 @@
 <template>
-  <div style="background-color: silver; min-height: 100vh; padding-top: 10%">
+  <div
+    style="background-color: mediumorchid; min-height: 100vh; padding-top: 10%"
+  >
     <h1 class="outer" v-if="isLogin === false">Foo-D Sign Up</h1>
     <h1 class="outer" v-else>Foo-D Login</h1>
 
@@ -28,9 +30,11 @@
       <br />
       <p>or</p>
 
-      <a href="#" @click="isLogin === false ? loadLogin() : loadSignUp()">{{
-        isLogin === false ? "Login" : "Sign Up"
-      }}</a
+      <a
+        class="loginsignup"
+        href="#"
+        @click="isLogin === false ? loadLogin() : loadSignUp()"
+        >{{ isLogin === false ? "Login" : "Sign Up" }}</a
       ><br />
 
       <button @click="signInWithGoogle()">Continue with Google</button>
@@ -45,11 +49,16 @@
 </template>
 
 <style scoped>
+.loginsignup {
+  color: yellow;
+}
+
 .outer {
   display: flex;
   flex-direction: row;
   justify-content: center;
   margin-bottom: 3%;
+  color: yellow;
 }
 
 .form-style {
@@ -66,6 +75,7 @@
 import firebase from "firebase";
 import { useRouter } from "vue-router";
 import { analytics } from "../main";
+import router from "../router";
 
 export default {
   mounted() {
@@ -76,6 +86,8 @@ export default {
     console.log("FRAME", frame);
   },
   setup() {
+    const router = useRouter();
+
     const signInWithGoogle = () => {
       var provider = new firebase.auth.GoogleAuthProvider();
       provider.addScope("https://www.googleapis.com/auth/contacts.readonly");
@@ -94,7 +106,6 @@ export default {
           analytics.logEvent("login", {
             method: "Google",
           });
-          const router = useRouter();
           router.replace("/posts");
         })
         .catch((error) => {
@@ -107,14 +118,6 @@ export default {
   },
 
   methods: {
-    // created: function() {
-    //   window.addEventListener("message", (event) => {
-    //     // IMPORTANT: check the origin of the data!
-
-    //     console.log(event.data);
-    //     return;
-    //   });
-    // },
     onSubmit() {
       //if sign up
       if (this.isLogin === false) {
@@ -134,6 +137,10 @@ export default {
             .then((result) => {
               var user = result.user;
               console.log("USER: ", user);
+              analytics.logEvent("sign_up", {
+                label: "Sign Up With Email & Pwd",
+              });
+              router.replace("/posts");
             });
         } else alert("Please fill all fields!");
       }
@@ -149,11 +156,13 @@ export default {
             .then((result) => {
               var user = result.user;
               console.log("USER: ", user);
+              analytics.logEvent("sign_in", {
+                label: "Sign In With Email & Pwd",
+              });
+              router.replace("/posts");
             });
         } else alert("Please fill all fields!");
       }
-
-      useRouter().replace("/posts");
     },
     loadLogin() {
       this.isLogin = true;

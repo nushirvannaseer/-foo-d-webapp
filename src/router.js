@@ -5,14 +5,14 @@ import Posts from "./components/Posts.vue";
 import Geolocation from "./components/Geolocation.vue";
 
 const routes = [
-  // {
-  //   path: "/",
-  //   component: Home,
-  // },
   {
-    path: "/loginSignUp",
+    path: "/",
     component: LoginSignUp,
   },
+  // {
+  //   path: "/loginSignUp",
+  //   component: LoginSignUp,
+  // },
   {
     path: "/posts",
     component: Posts,
